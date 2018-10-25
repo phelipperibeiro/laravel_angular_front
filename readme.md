@@ -13,7 +13,7 @@
 6-) (caso nao tenha instalado) instalar bower com o comando: npm install -g bower (-g global)
 
 7-) rodar o comando: bower install (gerenciador de dependecia JS, bower.json)
-    obs: lembrando que o arquivo (.bowerrc) contem o path do diretorio que guarda as libs
+    obs: lembrando que o arquivo (.bowerrc) contem o path do diretorio que guarda as dependecias instaladas pelo bower
 
 8-) (caso nao tenha instalado) instalar bower com os comandos:
      npm install gulp-cli -g (-g global)
