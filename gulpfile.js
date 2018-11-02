@@ -67,35 +67,43 @@ gulp.task('copy-scripts', function(){
 
 
 
+// dev
 gulp.task('watch-dev', ['clear-build-folder'], function(){
     
-    liveReload.listen();
+    liveReload.listen(); // ligando o watch
     
     gulp.start('copy-styles', 'copy-scripts', 'copy-html');  // chamando outras tarefas
     
-    gulp.watch(config.assets_path + '/**', ['copy-styles','copy-scripts','copy-html']); // assistindo as mudancas
+    gulp.watch(config.assets_path + '/**', ['copy-styles','copy-scripts','copy-html']); 
+    //gulp.watch é src de onde vai assistir as mudancas, caso elas acontecam, ele e a copia e joga no public
     
 });
 
+// prod
 gulp.task('default', ['clear-build-folder'], function(){
     
     gulp.start('copy-html');
     
     elixir(function(mix) {
         
+        //pegando todos os css (proprios e de terceiros) e os comprimindo e nomeando o como public/css/all.css 
         mix.styles(config.vendor_path_css.concat([config.assets_path + '/css/**/*.css']),
-        'public/css/all.css',config.assets_path); 
+        'public/css/all.css',
+        config.assets_path); 
         
+        //pegando todos os js (proprios e de terceiros) e os comprimindo e nomeando o como public/js/all.js 
         mix.scripts(config.vendor_path_js.concat([config.assets_path + '/js/**/*.js']),
-        'public/js/all.js',config.assets_path); 
+        'public/js/all.js', // nome do arquivo comprimido
+        config.assets_path); // endereco caminho dos arquivos q serao comprimidos (resource_path)
         
+        // versionando para mater o cache
         mix.version(['js/all.js', 'css/all.css']);
         
     });
 });
 
 gulp.task('clear-build-folder', function(){
-    clean.sync(config.build_path);
+    clean.sync(config.build_path); // excluindo os arquivos
 });
 
 
