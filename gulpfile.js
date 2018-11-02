@@ -35,40 +35,46 @@ config.vendor_path_js = [
     config.bower_path + '/angular-oauth2/dist/angular-oauth2.min.js',
 ];
 
-//obs: /**/ todos os diretorios
 
 gulp.task('copy-styles', function(){
     
-    gulp.src([config.assets_path + '/css/**/*.css'])
-      .pipe(gulp.dest(config.build_path_css))
-      .pipe(liveReload());
+    gulp.src([config.assets_path + '/css/**/*.css']) //obs: /**/ todos os diretorios
+      .pipe(gulp.dest(config.build_path_css)) // (pipe: tarefa) copiando todos os arquivos de gulp.src(resources_path) para o gulp.dest(public_path)
+      .pipe(liveReload()); // (pipe: tarefa) notifica o bash com o liveReload()
 
-    gulp.src(config.vendor_path_css)
+    gulp.src(config.vendor_path_css) // css de terceiros
       .pipe(gulp.dest(config.build_vendor_path_css))
       .pipe(liveReload());
 });
 
 gulp.task('copy-html', function(){
-   gulp.src([config.assets_path + '/js/views/**/*.html'])
-      .pipe(gulp.dest(config.build_path_html))
-      .pipe(liveReload());
+    
+   gulp.src([config.assets_path + '/js/views/**/*.html']) //obs: /**/ todos os diretorios
+      .pipe(gulp.dest(config.build_path_html)) // (pipe: tarefa) copiando todos os arquivos de gulp.src(resources_path) para o gulp.dest(public_path)
+      .pipe(liveReload()); // (pipe: tarefa) notifica o bash com o liveReload()
 });
 
 gulp.task('copy-scripts', function(){
     
-    gulp.src([config.assets_path + '/js/**/*.js'])
-      .pipe(gulp.dest(config.build_path_js))
-      .pipe(liveReload());
+    gulp.src([config.assets_path + '/js/**/*.js']) //obs: /**/ todos os diretorios
+      .pipe(gulp.dest(config.build_path_js)) // (pipe: tarefa) copiando todos os arquivos de gulp.src(resources_path) para o gulp.dest(public_path)
+      .pipe(liveReload()); // (pipe: tarefa) notifica o bash com o liveReload()
       
-    gulp.src(config.vendor_path_js)
+    gulp.src(config.vendor_path_js) // js de terceiros
       .pipe(gulp.dest(config.build_vendor_path_js))
       .pipe(liveReload());  
 });
 
+
+
 gulp.task('watch-dev', ['clear-build-folder'], function(){
+    
     liveReload.listen();
-    gulp.start('copy-styles', 'copy-scripts', 'copy-html');
-    gulp.watch(config.assets_path + '/**', ['copy-styles','copy-scripts','copy-html']);
+    
+    gulp.start('copy-styles', 'copy-scripts', 'copy-html');  // chamando outras tarefas
+    
+    gulp.watch(config.assets_path + '/**', ['copy-styles','copy-scripts','copy-html']); // assistindo as mudancas
+    
 });
 
 gulp.task('default', ['clear-build-folder'], function(){
