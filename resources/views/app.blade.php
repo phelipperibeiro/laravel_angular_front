@@ -62,7 +62,11 @@
         </nav>
 
         <!-- @yield('content') -->
-        <div ng-view></div>
+        <div ng-view>
+            
+            
+        </div>
+        
         <!-- Scripts -->
         @if(Config::get('app.debug')) 
         <script src="{{ asset('build/js/vendor/jquery.min.js')}}"></script>
@@ -78,9 +82,9 @@
         <!--<script src="{{ asset('build/js/vendor/query-string.js')}}"></script>-->
         <!--<script src="{{ asset('build/js/vendor/angular-oauth2.min.js')}}"></script>-->
 
-        <!--<script src="{{ asset('build/js/app.js')}}"></script>-->
-        <!--<script src="{{ asset('build/js/controllers/login.js')}}"></script>-->
-        <!--<script src="{{ asset('build/js/controllers/home.js')}}"></script>-->
+        <script src="{{ asset('build/js/app.js')}}"></script>
+        <script src="{{ asset('build/js/controllers/login.js')}}"></script>
+        <script src="{{ asset('build/js/controllers/home.js')}}"></script>
         @else
         <script src="{{ elixir('js/all.js')}}"></script>
         @endif
