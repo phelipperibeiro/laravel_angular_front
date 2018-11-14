@@ -1,12 +1,12 @@
 //app.controllers depende de ngRoute
-var app = angular.module('app', ['ngRoute','app.controllers']);
+var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.controllers']);
 
 
-angular.module('app.controllers', []);
+angular.module('app.controllers', ['angular-oauth2']);
 
 
 // registrando as rotas com ($routeProvider)
-app.config(['$routeProvider', function ($routeProvider) {
+app.config(['$routeProvider', 'OAuthProvider', function ($routeProvider, OAuthProvider) {
     
     $routeProvider
         .when('/login', {
@@ -17,5 +17,33 @@ app.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'build/views/home.html',
             controller: 'HomeController'
         });
-       
+        
+ OAuthProvider
+        .configure({
+            baseUrl: 'http://localhost:8000',
+            clientId: '1',
+            clientSecret: '4b2Ebj8AFb92tmxEYxZLhRUoqntMZNsawjGl1Uud', // optional
+            grantPath: 'oauth/token',
+        });
+
 }]);
+
+
+app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {
+    $rootScope.$on('oauth:error', function (event, rejection) {
+        // Ignore `invalid_grant` error - should be catched on `LoginController`.
+        if ('invalid_grant' === rejection.data.error) {
+            return;
+        }
+
+        // Refresh token when a `invalid_token` error occurs.
+        if ('invalid_token' === rejection.data.error) {
+            return OAuth.getRefreshToken();
+        }
+
+        // Redirect to `/login` with the `error_reason`.
+        return $window.location.href = '/login?error_reason=' + rejection.data.error;
+    });
+}]);
+
+
