@@ -20,10 +20,10 @@ app.config(['$routeProvider', 'OAuthProvider', function ($routeProvider, OAuthPr
         
  OAuthProvider
         .configure({
-            baseUrl: 'http://localhost:8000',
-            clientId: '1',
-            clientSecret: '4b2Ebj8AFb92tmxEYxZLhRUoqntMZNsawjGl1Uud', // optional
+            baseUrl: 'http://localhost:8080',
             grantPath: 'oauth/token',
+            clientId: '1',
+            // clientSecret: '4b2Ebj8AFb92tmxEYxZLhRUoqntMZNsawjGl1Uud', // optional
         });
 
 }]);
