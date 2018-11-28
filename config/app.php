@@ -27,6 +27,17 @@ return [
     */
 
     'debug' => env('APP_DEBUG', false),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | URL BASE API
+    |--------------------------------------------------------------------------
+    |
+    | 
+    |
+    */
+
+    'external_api' => env('API_URL_BASE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -155,6 +166,12 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
+        /*
+         * Injections
+         */
+        App\Providers\GuzzleClientServiceProvider::class,
+        App\Providers\RequestServiceProvider::class,
 
     ],
 
