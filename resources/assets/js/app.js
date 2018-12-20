@@ -18,16 +18,16 @@ app.config(['$routeProvider', 'OAuthProvider', function ($routeProvider, OAuthPr
             controller: 'HomeController'
         });
         
- OAuthProvider
+    OAuthProvider
         .configure({
             baseUrl: 'http://localhost:8080',
             grantPath: 'oauth/token',
             clientId: '1',
+            // revokePath: '/oauth2/revoke',
             // clientSecret: '4b2Ebj8AFb92tmxEYxZLhRUoqntMZNsawjGl1Uud', // optional
         });
 
 }]);
-
 
 app.run(['$rootScope', '$window', 'OAuth', function ($rootScope, $window, OAuth) {
     $rootScope.$on('oauth:error', function (event, rejection) {

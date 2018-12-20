@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Service\RequestService;
 
 class RequestServiceProvider extends ServiceProvider
 {
@@ -24,8 +25,8 @@ class RequestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Service\RequestService', function($app) {
-            return new App\Service\RequestService(
+        $this->app->singleton('App\Service\RequestService', function($app) {
+            return new RequestService(
                     $app->make('config')->get('app.external_api'),
                     $app->make('GuzzleHttp\Client')
                     );
