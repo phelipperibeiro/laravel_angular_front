@@ -8,6 +8,11 @@ angular.module('app.controllers')
                     password: ''
                 }
 
+                $scope.error = {
+                    message: '',
+                    error: false
+                }
+
                 $scope.login = function () {
 
                     //console.log($scope.user);
@@ -17,16 +22,24 @@ angular.module('app.controllers')
                         alert('success');
                     };
 
-                    var fail = function () {
-                        //alert('login invalido');
-                        alert('fail');
+                    var fail = function (data) {
+
+                        //console.log(data);
+
+                        var msg = [];
+                        $.each(data.data.message, function (index, value) {  
+                            msg.push(value[0]);
+                        });
+                        
+                        $scope.error.error = true;
+                        $scope.error.message = msg;
                     };
 
                     // https://github.com/oauthjs/angular-oauth2
                     // https://github.com/oauthjs/angular-oauth2/blob/master/dist/angular-oauth2.js 
 
                     OAuth.getAccessToken($scope.user).then(success, fail);
-                    
+
                 }
                 
             }]);

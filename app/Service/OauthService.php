@@ -28,10 +28,9 @@ class OauthService
 
     public function Oauth($data)
     {
-
         $messages = [
-            'username.required' => 'login é obrigatório',
-            'password.required' => 'senha é obrigatória'
+            'username.required' => 'Login é obrigatório',
+            'password.required' => 'Senha é obrigatória'
         ];
 
         $validator = $this->validator->make($data, [
@@ -39,8 +38,8 @@ class OauthService
             'password' => 'required',
                 ], $messages);
 
-        if ($validator->fails()) {
-            return [ 'error' => $validator->errors(), 'message' => $validator->errors()];
+        if ($validator->fails()) {            
+            return response()->json([ 'error' => 'invalid_credentials', 'message' => $validator->errors()], 401);
         }
 
         $requestData = array();
