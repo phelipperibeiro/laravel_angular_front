@@ -1,4 +1,8 @@
 angular.module('app.controllers')
-        .controller('HomeController', ['$scope', function($scope){
-       
-        }]);
+        .controller('HomeController', ['$scope', 'MyOAuthService', function ($scope, MyOAuthService) {
+
+                MyOAuthService.isAuthenticated();
+
+
+
+            }]);

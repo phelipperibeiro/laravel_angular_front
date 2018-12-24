@@ -1,5 +1,8 @@
 angular.module('app.controllers')
-        .controller('LoginController', ['$scope', '$location', 'OAuth', function ($scope, $location, OAuth) {
+        .controller('LoginController', ['$scope', '$location', 'OAuth', 'MyOAuthService', function ($scope, $location, OAuth, MyOAuthService) {
+                
+                MyOAuthService.isAuthenticated();
+                        
                 $scope.user = {
                     username: '',
                     password: ''
@@ -25,6 +28,7 @@ angular.module('app.controllers')
                     OAuth.getAccessToken($scope.user).then(success, fail);
                     
                 }
+                
             }]);
 
     
