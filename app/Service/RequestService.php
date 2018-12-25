@@ -9,6 +9,10 @@ class RequestService
 
     private $UrlBase;
     
+    /**
+     *
+     * @var Client 
+     */
     private $GuzzleHttp;    
 
     public function __construct($UrlBase, Client $GuzzleHttp)
