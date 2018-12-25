@@ -1,7 +1,7 @@
 angular.module('app.controllers')
-        .controller('LoginController', ['$scope', '$location', 'OAuth', 'MyOAuthService', function ($scope, $location, OAuth, MyOAuthService) {
+        .controller('LoginController', ['$scope', '$location', 'MyOAuthService', function ($scope, $location, MyOAuthService) {
                 
-                MyOAuthService.isAuthenticated();
+                //MyOAuthService.isAuthenticated();            
                         
                 $scope.user = {
                     username: '',
@@ -18,8 +18,11 @@ angular.module('app.controllers')
                     //console.log($scope.user);
 
                     var success = function () {
-                        //$location.path('home');
-                        alert('success');
+                        
+                        $scope.error.error = false;
+                        
+                        $location.path('home');
+                        //alert('success');
                     };
 
                     var fail = function (data) {
@@ -35,10 +38,7 @@ angular.module('app.controllers')
                         $scope.error.message = msg;
                     };
 
-                    // https://github.com/oauthjs/angular-oauth2
-                    // https://github.com/oauthjs/angular-oauth2/blob/master/dist/angular-oauth2.js 
-
-                    OAuth.getAccessToken($scope.user).then(success, fail);
+                    MyOAuthService.authenticate($scope.user, success, fail);
 
                 }
                 

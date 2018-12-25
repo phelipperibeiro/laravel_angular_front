@@ -1,37 +1,52 @@
 //app.controllers depende de ngRoute
 var app = angular.module('app', ['ngRoute', 'angular-oauth2', 'app.controllers']);
 
+angular.module('app.controllers', ['angular-oauth2']);
 
-app.service('MyOAuthService', ['OAuth', '$window', function (OAuth, $window) {
+app.service('MyOAuthService', ['OAuth', '$route', '$location', function (OAuth, $route, $location) {
 
         return {
-            isAuthenticated: function (controller) {
-
-                window.location.href;
+            isAuthenticated: function () {
                 
-                switch (controller) {
-                    case LoginController:
-                        if (OAuth.isAuthenticated()) {
-                            $window.location.href = '/home';
-                        }
-
-                        break;
-                    default:
-                        if (!OAuth.isAuthenticated()) {
-                            $window.location.href = '/login';
-                        }
-                        
-                        break;
+                if (!OAuth.isAuthenticated()) {
+                    //$window.location.href = '#/home';
+                    $location.path('login');
+                    return false;
                 }
+                
+                $location.path('home');
+                return false;
+//                var controller = $route.current.controller;
+//                
+//                alert(controller);
+//                
+//                switch (controller) {
+//                    case "LoginController":
+//                        if (OAuth.isAuthenticated()) {
+//                            $window.location.href = '#/home';
+//                            return false;
+//                        }
+//
+//                        break;
+//                    default:
+//                        if (!OAuth.isAuthenticated()) {
+//                            $window.location.href = '#/login';
+//                            return false;
+//                        }
+//
+//                        break;
+//                }
+            },
+            authenticate: function (user, success, fail) {
+                
+                // https://github.com/oauthjs/angular-oauth2
+                // https://github.com/oauthjs/angular-oauth2/blob/master/dist/angular-oauth2.js 
+
+                return OAuth.getAccessToken(user).then(success, fail);
             }
         };
 
     }]);
-
-
-
-angular.module('app.controllers', ['angular-oauth2']);
-
 
 // registrando as rotas com ($routeProvider)
 app.config(['$routeProvider', 'OAuthProvider', function ($routeProvider, OAuthProvider) {
